@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserServices } from '../services/user/index.service.js';
+import InputPassword from '../components/forms/InputPassword.vue';
+import InputEmail from '../components/forms/InputEmail.vue';
+import Button from '../components/forms/Button.vue';
 
 const { loginService } = useUserServices;
 
@@ -20,6 +23,10 @@ const handleLogin = async () => {
         errorMessage.value = data.message;
     }
 }
+
+definePageMeta({
+    layout: false
+})
 </script>
 
 <template>
@@ -29,22 +36,14 @@ const handleLogin = async () => {
 
             <form @submit.prevent="handleLogin">
                 <div class="form-group">
-                    <label for="email">
-                        Correo electrónico
-                    </label>
-                    <input type="email" id="email" v-model="email" required>
+                    <InputEmail v-model="email" placeholder="Correo electrónico" required />
                 </div>
-
                 <div class="form-group">
-                    <label for="password">
-                        Contraseña
-                    </label>
-                    <input type="password" id="password" v-model="password" required>
+                    <InputPassword v-model="password" placeholder="Contraseña" required />
                 </div>
 
-                <button type="submit">
-                    Ingresar
-                </button>
+                <Button type="principal" text="Ingresar" />
+
                 <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
             </form>
         </div>
@@ -83,37 +82,8 @@ h2 {
     margin-bottom: 1.5rem;
 }
 
-label {
-    display: block;
-    color: #4a5568;
-    margin-bottom: 0.5rem;
-}
 
 input {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.375rem;
-}
-
-input:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-}
-
-button {
-    width: 100%;
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-button:hover {
-    background-color: #2563eb;
+    width: calc(100% - 32px);
 }
 </style>
